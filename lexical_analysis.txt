@@ -1,0 +1,4 @@
+1: reserved word: program
+1: ID, name = p
+2: .
+2: EOF
