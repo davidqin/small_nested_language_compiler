@@ -22,7 +22,9 @@ static char reserved_words[][20] = {
   "fi",      // 34
   "type",     // 35
   "integer",
-  "write"
+  "write",
+  "array",
+  "of"
 };
 
 void letter_start_handler(FILE * fp){
@@ -35,7 +37,7 @@ void letter_start_handler(FILE * fp){
   ungetc(ch, fp);
   buffer[i] = '\0';
 
-  for(i = 0; i < 18; ++i){
+  for(i = 0; i < 20; ++i){
     if( strcmp(buffer, reserved_words[i]) == 0 ){
       printf("%d: reserved word: %s\n", lineno, buffer);
       return;
@@ -47,7 +49,7 @@ void letter_start_handler(FILE * fp){
 void digit_start_handler(FILE * fp){
   int i;
   fscanf(fp, "%d", &i);
-  printf("%d: INTC, var = %d\n", lineno, i);
+  printf("%d: INTEGER, var = %d\n", lineno, i);
 }
 
 void print_sym(char ch){
@@ -69,7 +71,7 @@ void dot_start_handler(FILE * fp){
   char ch;
   ch = fgetc(fp);
   if( ch == '.' )
-    printf("(16,\"..\")\n"); // 16 ..
+    printf("%d: ..\n", lineno);
   else {
     printf("%d: .\n", lineno);
     ungetc(ch, fp);
@@ -131,6 +133,8 @@ void analyzer(FILE * fp){
     else if ( ch == '<' ) print_sym('<');
     else if ( ch == ',' ) print_sym(',');
     else if ( ch == '"' ) print_sym('"');
+    else if ( ch == '[' ) print_sym('[');
+    else if ( ch == ']' ) print_sym(']');
   }
   printf("%d: EOF\n", lineno);
 }

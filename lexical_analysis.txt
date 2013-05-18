@@ -1,4 +1,20 @@
 1: reserved word: program
-1: ID, name = p
-2: .
-2: EOF
+1: ID, name = example
+2: reserved word: type
+2: ID, name = w1
+2: =
+2: reserved word: integer
+2: ;
+3: ID, name = w3
+3: =
+3: reserved word: array
+3: [
+3: INTEGER, var = 3
+3: ..
+3: INTEGER, var = 6
+3: ]
+3: reserved word: of
+3: reserved word: integer
+3: ;
+4: .
+4: EOF

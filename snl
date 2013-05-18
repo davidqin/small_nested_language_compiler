@@ -1,2 +1,4 @@
-program p
+program  example
+type w1=integer;
+     w3=array [3..6] of integer;  {haha}
 .
