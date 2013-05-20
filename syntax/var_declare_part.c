@@ -49,7 +49,7 @@ TreeNode * VarDecList(){
   TypeDef(t);
   VarIdList(t);
 
-  t->Sibling = VarDecMore(); // To DO Write A Un Read Token
+  t->Sibling = VarDecMore();
 
   return t;
 }
