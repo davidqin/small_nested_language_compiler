@@ -143,8 +143,8 @@ int main(int argc, char * argv[]){
   char * file_name = *++argv;
 
   // FILE * fp = fopen(file_name, "r");
-  FILE * fp = fopen("../snl", "r");
-  freopen("../results/lexical_analysis.txt", "w", stdout);
+  FILE * fp = fopen("snl", "r");
+  freopen("results/lexical_analysis.txt", "w", stdout);
 
   analyzer(fp);
 

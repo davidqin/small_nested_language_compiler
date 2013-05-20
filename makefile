@@ -1,21 +1,21 @@
 all:
-	make syntax
-	make lexical
+	make lexical_analyst
+	make syntax_analyst
 
-lexical: results/compile/lexical.o
-	gcc -o results/lexical $^
+lexical_analyst: results/compile/lexical.o
+	gcc -o $@ $^
 
 results/compile/lexical.o: lexical/main.c
 	gcc -c $< -o $@
 
-syntax: results/compile/declare_part.o \
+syntax_analyst: results/compile/declare_part.o \
                 results/compile/main.o \
                 results/compile/program_body_part.o \
                 results/compile/token.o \
                 results/compile/type_declare_part.o \
                 results/compile/utils.o \
                 results/compile/var_declare_part.o
-	gcc -o results/syntax $^
+	gcc -o $@ $^
 
 results/compile/declare_part.o: syntax/declare_part.c
 	gcc -c $< -o $@
@@ -39,4 +39,4 @@ results/compile/var_declare_part.o: syntax/var_declare_part.c
 	gcc -c $< -o $@
 
 clean:
-	rm -rf results/compile/*.o results/syntax results/lexical
+	rm -rf results/compile/*.o syntax_analyst lexical_analyst
