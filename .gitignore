@@ -1,3 +1,4 @@
 results/compile/*.o
 syntax_analyst
 lexical_analyst
+.DS_Stroe
