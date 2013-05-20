@@ -1,7 +1,6 @@
 #include "../include/syntax.h"
 
 TreeNode * DeclarePart(){
-  ReadToken();
 
   TreeNode * typeP = (TreeNode *)malloc(sizeof(TreeNode));
   TreeNode * pp = (TreeNode *)malloc(sizeof(TreeNode));;

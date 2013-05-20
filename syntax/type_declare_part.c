@@ -1,20 +1,23 @@
 #include "../include/syntax.h"
 
 void BaseType(TreeNode * t){
+  ReadToken();
 
-  if( strcmp(tokenValueBuffer, "integer") == 0 ){
+  if( is_reversed_word("integer") ){
     t->kind.d = IntegerK;
     return;
   }
 
-  if( strcmp(tokenValueBuffer, "char") == 0 ){
+  if( is_reversed_word("char") ){
     t->kind.d = CharK;
     return;
   }
 }
 
 void ArrayType(TreeNode * t){
-  if( ReadToken() != SNL_SYMBOL || strcmp(tokenValueBuffer, "[") != 0){
+
+  ReadToken();
+  if( is_not_symbol("[") ){
     fprintf(stderr, "array declaration '[' miss! \n");
     return;
   }
@@ -25,7 +28,8 @@ void ArrayType(TreeNode * t){
   } else
     t->attr.a_attr.low = i_tokenValueBuffer;
 
-  if( ReadToken() != SNL_SYMBOL || strcmp(tokenValueBuffer, "..") != 0){
+  ReadToken();
+  if( is_not_symbol("..") ){
     fprintf(stderr, "array declaration '..' miss! \n");
     return;
   }
@@ -36,17 +40,18 @@ void ArrayType(TreeNode * t){
   } else
     t->attr.a_attr.up = i_tokenValueBuffer;
 
-  if( ReadToken() != SNL_SYMBOL || strcmp(tokenValueBuffer, "]") != 0){
+  ReadToken();
+  if( is_not_symbol("]") ){
     fprintf(stderr, "array declaration ']' miss! \n");
     return;
   }
 
-  if( ReadToken() != SNL_REVERSE_WORD || strcmp(tokenValueBuffer, "of") != 0){
+  ReadToken();
+  if( is_not_reversed_word("of") ){
     fprintf(stderr, "array declaration 'of' miss! \n");
     return;
   }
 
-  ReadToken();
   BaseType(t);
 
   t->attr.a_attr.childType = t->kind.d;
@@ -59,12 +64,12 @@ void RecType(TreeNode * t){
 }
 
 void StrutureType(TreeNode * t){
-  if( strcmp(tokenValueBuffer, "array") == 0 ){
+  if( is_reversed_word("array") ){
     ArrayType(t);
     return;
   }
 
-  if( strcmp(tokenValueBuffer, "record") == 0 ){
+  if( is_reversed_word("record") ){
     t->kind.d = RecordK;
     RecType(t);
     return;
@@ -72,27 +77,25 @@ void StrutureType(TreeNode * t){
 }
 
 void TypeId(TreeNode * t){
-  if( tokenType == SNL_ID )
+  ReadToken();
+  if( token_is_id )
     strcpy(t->name[t->idnum++], tokenValueBuffer);
+  else{
+    fprintf(stderr, "type declaration miss Id.\n");
+    UnReadToken();
+  }
 }
 
 void TypeDef(TreeNode * t){
   ReadToken();
 
-  if( tokenType == SNL_REVERSE_WORD &&
-      ( strcmp(tokenValueBuffer, "integer") == 0 ||
-        strcmp(tokenValueBuffer, "char") == 0
-      )
-    ){
+  if( is_reversed_word("integer") || is_reversed_word("char") ){
+    UnReadToken();
     BaseType(t);
     return;
   }
 
-  if( tokenType == SNL_REVERSE_WORD &&
-      ( strcmp(tokenValueBuffer, "array") == 0 ||
-        strcmp(tokenValueBuffer, "record") == 0
-      )
-    ){
+  if( is_reversed_word("array") || is_reversed_word("record") ){
     StrutureType(t);
     return;
   }
@@ -103,20 +106,16 @@ void TypeDef(TreeNode * t){
   }
 }
 
-TreeNode * TypeDecList();
 TreeNode * TypeDecMore(){
   TreeNode * t = NULL;
 
-  if( ReadToken() == SNL_REVERSE_WORD &&
-      ( strcmp(tokenValueBuffer, "var") == 0 ||
-        strcmp(tokenValueBuffer, "procedure") == 0 ||
-        strcmp(tokenValueBuffer, "begin") == 0
-      )
-    )
-    return t;
+  ReadToken();
 
-  if( tokenType == SNL_ID )
+  if( token_is_id ){
+    UnReadToken();
     t = TypeDecList();
+  } else
+    UnReadToken();
 
   return t;
 }
@@ -129,12 +128,14 @@ TreeNode * TypeDecList(){
 
   TypeId(t);
 
-  if( ReadToken() != SNL_SYMBOL || strcmp(tokenValueBuffer, "=") != 0 )
+  ReadToken();
+  if( is_not_symbol("=") )
     fprintf(stderr, "type declaration '=' miss! \n");
 
   TypeDef(t);
 
-  if( ReadToken() != SNL_SYMBOL || strcmp(tokenValueBuffer, ";") != 0 )
+  ReadToken();
+  if( is_not_symbol(";") )
     fprintf(stderr, "type declaration ';' miss! \n");
 
   TreeNode * p;
@@ -148,7 +149,6 @@ TreeNode * TypeDecList(){
 
 TreeNode * typeDeclaration(){
 
-  ReadToken();
   TreeNode * t = TypeDecList();
 
   if( t == NULL )
@@ -158,18 +158,12 @@ TreeNode * typeDeclaration(){
 }
 
 TreeNode * TypeDec(){
-  TreeNode * t = NULL;
+  ReadToken();
 
-  if(tokenType == SNL_REVERSE_WORD && strcmp(tokenValueBuffer, "type") == 0 ){
-    t = typeDeclaration();
-    return t;
-  }
+  if( is_reversed_word("type") )
+    return typeDeclaration();
+  else
+    UnReadToken();
 
-  if( strcmp(tokenValueBuffer, "var") != 0 &&
-      strcmp(tokenValueBuffer, "procedure") != 0 &&
-      strcmp(tokenValueBuffer, "begin") != 0
-    )
-    ReadToken();
-
-  return t;
+  return NULL;
 }

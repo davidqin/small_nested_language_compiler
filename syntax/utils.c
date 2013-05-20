@@ -16,10 +16,6 @@ int is_not_symbol(const char * chs){
   return is_symbol(chs) ? 0 : 1;
 }
 
-int is_eof(){
-  return strcmp("EOF", tokenValueBuffer) == 0 ? 1 : 0;
-}
-
 static int dep = 0;
 
 void printf_syntax_tree(TreeNode * root){

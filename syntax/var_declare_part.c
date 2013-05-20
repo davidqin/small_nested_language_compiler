@@ -1,38 +1,39 @@
 #include "../include/syntax.h"
 
-TreeNode * VarDecList();
-
 TreeNode * VarDecMore(){
   TreeNode * t = NULL;
+  ReadToken();
 
   if(
-      ( tokenType == SNL_REVERSE_WORD &&
-        ( strcmp(tokenValueBuffer, "integer") == 0 ||
-          strcmp(tokenValueBuffer, "char")    == 0 ||
-          strcmp(tokenValueBuffer, "array")   == 0 ||
-          strcmp(tokenValueBuffer, "record")  == 0
-        )
-      ) ||
-      (
-        tokenType == SNL_ID
-      )
+      is_reversed_word("integer") ||
+      is_reversed_word("char")    ||
+      is_reversed_word("array")   ||
+      is_reversed_word("record")  ||
+      token_is_id
     )
-    VarDecList();
+  {
+    UnReadToken();
+    t = VarDecList();
+  } else
+    UnReadToken();
 
   return t;
 }
 
-void VarIdList(TreeNode * t);
 
 void VarIdMore(TreeNode * t){
-  if(ReadToken() == SNL_SYMBOL && (strcmp(tokenValueBuffer, ";") == 0 ) )
+  ReadToken();
+
+  if( is_symbol(";") )
     return;
-  else if(strcmp(tokenValueBuffer, ",") == 0)
+  else if( is_symbol(",") )
     VarIdList(t);
 }
 
 void VarIdList(TreeNode * t){
-  if(ReadToken() == SNL_ID)
+  ReadToken();
+
+  if( token_is_id )
     strcpy(t->name[t->idnum++], tokenValueBuffer);
 
   VarIdMore(t);
@@ -63,14 +64,12 @@ TreeNode * VarDeclaration(){
 }
 
 TreeNode * VarDec(){
-  TreeNode * t = NULL;
-
-  if(tokenType != SNL_REVERSE_WORD || strcmp(tokenValueBuffer, "var") != 0 )
-    return t;
-
-  VarDeclaration();
-
   ReadToken();
 
-  return t;
+  if( is_reversed_word("var") )
+    return VarDeclaration();
+  else
+    UnReadToken();
+
+  return NULL;
 }

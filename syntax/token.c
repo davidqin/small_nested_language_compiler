@@ -6,12 +6,23 @@ int i_tokenValueBuffer;
 
 char unReadTokenBuffer[30];
 SNL_TYPE unReadTokenType;
+int hasUnReadToken;
 
 void UnReadToken(){
-
+  strcpy(unReadTokenBuffer, tokenValueBuffer);
+  unReadTokenType = tokenType;
+  hasUnReadToken = 1;
 }
 
 SNL_TYPE ReadToken(){
+
+  if(hasUnReadToken){
+    strcpy(tokenValueBuffer, unReadTokenBuffer);
+    tokenType = unReadTokenType;
+    hasUnReadToken = 0;
+    return tokenType;
+  }
+
   int lineno, i;
   char type[30], chs[30];
   fscanf(fp, "%d: %s", &lineno, type);
@@ -43,7 +54,6 @@ SNL_TYPE ReadToken(){
     // printf("%d %s\n", lineno, type);
     tokenType = SNL_SYMBOL;
     strcpy(tokenValueBuffer, type);
-
   }
 
   type[0] = '\0';

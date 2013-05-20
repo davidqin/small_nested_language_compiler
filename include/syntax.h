@@ -64,6 +64,7 @@ extern int i_tokenValueBuffer;
 
 extern char unReadTokenBuffer[30];
 extern SNL_TYPE unReadTokenType;
+extern int hasUnReadToken;
 
 TreeNode * DeclarePart();
 TreeNode * ProgramBody();
@@ -76,6 +77,13 @@ void UnReadToken();
 TreeNode * TypeDec();
 TreeNode * typeDeclaration();
 TreeNode * VarDec();
+void TypeDef(TreeNode * t);
+
+TreeNode * TypeDecList();
+TreeNode * TypeDecMore();
+
+TreeNode * VarDecList();
+void VarIdList(TreeNode * t);
 
 int is_reversed_word(const char * chs);
 int is_not_reversed_word(const char * chs);
@@ -83,4 +91,6 @@ int is_not_reversed_word(const char * chs);
 int is_symbol(const char * chs);
 int is_not_symbol(const char * chs);
 
-int is_eof();
+#define token_is_id ( tokenType == SNL_ID )
+#define token_is_not_id ( !token_is_id )
+#define token_is_eof ( strcmp("EOF", tokenValueBuffer) == 0 )

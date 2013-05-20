@@ -1,0 +1,2 @@
+#!/bin/bash
+make > /dev/null ; ./lexical_analyst ; ./syntax_analyst

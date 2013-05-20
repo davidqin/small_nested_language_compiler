@@ -8,12 +8,10 @@ TreeNode * ProgramHead(){
 
   if( is_not_reversed_word("program") ){
     fprintf(stderr, "Bad Begin(No reserved word program)\n");
-    return NULL;
   }
 
   if( ReadToken() != SNL_ID ){
     fprintf(stderr, "Bad program name\n");
-    return NULL;
   }
 
   TreeNode * t = (TreeNode *)malloc(sizeof(TreeNode));
@@ -68,7 +66,7 @@ TreeNode * parse(){
   t = Program();
 
   ReadToken();
-  if( is_eof() ){
+  if( token_is_eof ){
     fprintf(stderr, "Bad END\n");
     return NULL;
   }
