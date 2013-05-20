@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include "../include/syntax.h"
 
 SNL_TYPE tokenType;

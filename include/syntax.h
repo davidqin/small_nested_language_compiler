@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
 typedef enum { SNL_INTERGER, SNL_CHAR, SNL_ARRAY, SNL_RECORD, SNL_REVERSE_WORD, SNL_ID, SNL_SYMBOL } SNL_TYPE;
 
 typedef enum { ProK, PheadK, TypeK, VarK, ProcDecK, StmLK, Deck, StmtK, ExpK } NodeKind;
@@ -61,7 +65,22 @@ extern int i_tokenValueBuffer;
 extern char unReadTokenBuffer[30];
 extern SNL_TYPE unReadTokenType;
 
+TreeNode * DeclarePart();
+TreeNode * ProgramBody();
+
 int is_reversed_word(const char * );
 int is_not_reversed_word(const char * );
 SNL_TYPE ReadToken();
 void UnReadToken();
+
+TreeNode * TypeDec();
+TreeNode * typeDeclaration();
+TreeNode * VarDec();
+
+int is_reversed_word(const char * chs);
+int is_not_reversed_word(const char * chs);
+
+int is_symbol(const char * chs);
+int is_not_symbol(const char * chs);
+
+int is_eof();
