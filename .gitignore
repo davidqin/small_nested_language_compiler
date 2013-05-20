@@ -2,3 +2,5 @@ results/compile/*.o
 syntax_analyst
 lexical_analyst
 .DS_Store
+lexical_analysis.txt
+syntax_analysis.txt
