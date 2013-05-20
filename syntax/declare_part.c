@@ -14,19 +14,8 @@ TreeNode * DeclarePart(){
   if(varP){
     varP->child[0] = VarDec();
   }
+  // ReadToken();
+  // printf("token = %s\n", tokenValueBuffer);
 
-  TreeNode * t = NULL;
-
-  if( is_reversed_word("type") ){
-    t = typeDeclaration();
-    return t;
-  }
-
-  if( strcmp(tokenValueBuffer, "var") != 0 &&
-      strcmp(tokenValueBuffer, "procedure") != 0 &&
-      strcmp(tokenValueBuffer, "begin") != 0
-    )
-    ReadToken();
-
-  return t;
+  return pp;
 }
