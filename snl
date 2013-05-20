@@ -1,4 +1,8 @@
 program  example
-type w1=integer;
-     w3=array [3..6] of integer;  {haha}
+type  w1=integer;
+      w3=array [3..6] of integer;  {haha}
+var
+      integer a;
+      integer b;
+      w1 c;
 .

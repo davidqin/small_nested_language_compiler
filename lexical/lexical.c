@@ -5,22 +5,22 @@
 static int lineno;
 
 static char reserved_words[][20] = {
-  "main",    // 20
-  "int",     // 21
-  "if",      // 22
-  "then",    // 23
-  "else",    // 24
-  "return",  // 25
-  "while",   // 26
-  "for",     // 27
-  "begin",   // 28
-  "writeln", // 29
-  "program", // 30
-  "end",     // 31
-  "var",     // 32
-  "char",    // 33
-  "fi",      // 34
-  "type",     // 35
+  "main",
+  "int",
+  "if",
+  "then",
+  "else",
+  "return",
+  "while",
+  "for",
+  "begin",
+  "writeln",
+  "program",
+  "end",
+  "var",
+  "char",
+  "fi",
+  "type",
   "integer",
   "write",
   "array",
@@ -143,8 +143,8 @@ int main(int argc, char * argv[]){
   char * file_name = *++argv;
 
   // FILE * fp = fopen(file_name, "r");
-  FILE * fp = fopen("snl", "r");
-  freopen("lexical_analysis.txt", "w", stdout);
+  FILE * fp = fopen("../snl", "r");
+  freopen("../results/lexical_analysis.txt", "w", stdout);
 
   analyzer(fp);
 

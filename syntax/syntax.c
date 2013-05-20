@@ -1,66 +1,30 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "include/snl_syntax_analysis.h"
 
 static FILE * fp;
-
-typedef enum { SNL_INTERGER, SNL_CHAR, SNL_ARRAY, SNL_RECORD, SNL_REVERSE_WORD, SNL_ID, SNL_SYMBOL } SNL_TYPE;
-
-typedef enum { ProK, PheadK, TypeK, VarK, ProcDecK, StmLK, Deck, StmtK, ExpK } NodeKind;
-typedef enum { ArrayK, CharK, IntegerK, RecordK, IdK } dec;
-typedef enum { IfK, WhileK, AssignK, ReadK, WriteK, CallK, ReturnK } stmt;
-typedef enum { OpK, ConstK, IdEK } exp;
-typedef enum { valparamtype, varparamtype } ProcAttrType;
-typedef enum { IdV, ArrayMembV, FieldMembV } varKind;
-typedef enum { Void, Integer, Boolean } ExpType;
-
-typedef struct array {
-  int low;
-  int up;
-  dec childType;
-} ArrayAttr;
-
-typedef struct proc {
-  ProcAttrType paramt;
-} procAttr;
-
-typedef struct expAttr {
-  //op
-  int val;
-  varKind varkind;
-  ExpType type;
-} ExpAttr;
-
-typedef struct node {
-  struct node * child[3];
-  struct node * Sibling;
-  int Lineno;
-
-  NodeKind nodeKind;
-  char nodeKindStr[30];
-
-  union k {
-    dec d;
-    stmt s;
-    exp e;
-  } kind;
-
-  int idnum;
-  char name[10][30];
-  //table
-  char type_name[30];
-
-  union a {
-    ArrayAttr a_attr;
-    ExpAttr e_attr;
-    procAttr p_attr;
-  } attr;
-
-} TreeNode;
 
 static SNL_TYPE tokenType;
 static char tokenValueBuffer[30];
 static int i_tokenValueBuffer;
+
+static char unReadTokenBuffer[30];
+static SNL_TYPE unReadTokenType;
+
+void TypeDef(TreeNode * t);
+
+void UnReadToken(){
+
+}
+
+int is_reversed_word(const char * chs){
+  return (tokenType == SNL_REVERSE_WORD && strcmp(chs, tokenValueBuffer) == 0) ? 1 : 0;
+}
+
+int is_not_reversed_word(const char * chs){
+  return is_reversed_word(chs) ? 0 : 1;
+}
 
 SNL_TYPE ReadToken(){
   int lineno, i;
@@ -103,7 +67,9 @@ SNL_TYPE ReadToken(){
 
 TreeNode * ProgramHead(){
 
-  if( (ReadToken() != SNL_REVERSE_WORD) || strcmp(tokenValueBuffer, "program") != 0){
+  ReadToken();
+
+  if( is_not_reversed_word("program") ){
     fprintf(stderr, "Bad Begin(No reserved word program)\n");
     return NULL;
   }
@@ -122,9 +88,79 @@ TreeNode * ProgramHead(){
   return t;
 }
 
+TreeNode * VarDecList();
+
+TreeNode * VarDecMore(){
+  TreeNode * t = NULL;
+
+  if(
+      ( tokenType == SNL_REVERSE_WORD &&
+        ( strcmp(tokenValueBuffer, "integer") == 0 ||
+          strcmp(tokenValueBuffer, "char")    == 0 ||
+          strcmp(tokenValueBuffer, "array")   == 0 ||
+          strcmp(tokenValueBuffer, "record")  == 0
+        )
+      ) ||
+      (
+        tokenType == SNL_ID
+      )
+    )
+    VarDecList();
+
+  return t;
+}
+
+void VarIdList(TreeNode * t);
+
+void VarIdMore(TreeNode * t){
+  if(ReadToken() == SNL_SYMBOL && (strcmp(tokenValueBuffer, ";") == 0 ) )
+    return;
+  else if(strcmp(tokenValueBuffer, ",") == 0)
+    VarIdList(t);
+}
+
+void VarIdList(TreeNode * t){
+  if(ReadToken() == SNL_ID)
+    strcpy(t->name[t->idnum++], tokenValueBuffer);
+
+  VarIdMore(t);
+}
+
+TreeNode * VarDecList(){
+  TreeNode * t;
+  t = (TreeNode *)malloc(sizeof(TreeNode));
+
+  if(t == NULL)
+    return t;
+
+  TypeDef(t);
+  VarIdList(t);
+
+  t->Sibling = VarDecMore(); // To DO Write A Un Read Token
+
+  return t;
+}
+
+TreeNode * VarDeclaration(){
+  TreeNode * t = VarDecList();
+
+  if( t == NULL )
+    fprintf(stderr, "Error var dec");
+
+  return t;
+}
+
 TreeNode * VarDec(){
-  printf("%s", tokenValueBuffer);
-  return NULL;
+  TreeNode * t = NULL;
+
+  if(tokenType != SNL_REVERSE_WORD || strcmp(tokenValueBuffer, "var") != 0 )
+    return t;
+
+  VarDeclaration();
+
+  ReadToken();
+
+  return t;
 }
 
 void BaseType(TreeNode * t){
@@ -317,7 +353,20 @@ TreeNode * DeclarePart(){
     varP->child[0] = VarDec();
   }
 
-  return NULL;
+  TreeNode * t = NULL;
+
+  if(tokenType == SNL_REVERSE_WORD && strcmp(tokenValueBuffer, "type") == 0 ){
+    t = typeDeclaration();
+    return t;
+  }
+
+  if( strcmp(tokenValueBuffer, "var") != 0 &&
+      strcmp(tokenValueBuffer, "procedure") != 0 &&
+      strcmp(tokenValueBuffer, "begin") != 0
+    )
+    ReadToken();
+
+  return t;
 }
 
 TreeNode * ProgramBody(){
@@ -397,8 +446,8 @@ void printf_syntax_tree(TreeNode * root){
 int main(){
   fp = fopen("lexical_analysis.txt", "r");
   // freopen("lexical_syntax.txt", "w", stdout);
-
-  printf_syntax_tree(parse());
+  parse();
+  // printf_syntax_tree(parse());
 
   fclose(fp);
   return 0;

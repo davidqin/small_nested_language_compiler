@@ -16,5 +16,15 @@
 3: reserved word: of
 3: reserved word: integer
 3: ;
-4: .
-4: EOF
+4: reserved word: var
+5: reserved word: integer
+5: ID, name = a
+5: ;
+6: reserved word: integer
+6: ID, name = b
+6: ;
+7: ID, name = w1
+7: ID, name = c
+7: ;
+8: .
+8: EOF
