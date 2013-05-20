@@ -51,3 +51,17 @@ typedef struct node {
   } attr;
 
 } TreeNode;
+
+extern FILE * fp;
+
+extern SNL_TYPE tokenType;
+extern char tokenValueBuffer[30];
+extern int i_tokenValueBuffer;
+
+extern char unReadTokenBuffer[30];
+extern SNL_TYPE unReadTokenType;
+
+int is_reversed_word(const char * );
+int is_not_reversed_word(const char * );
+SNL_TYPE ReadToken();
+void UnReadToken();

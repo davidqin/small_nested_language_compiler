@@ -1,22 +1,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "include/snl_syntax_analysis.h"
+#include "../include/syntax.h"
 
-static FILE * fp;
-
-static SNL_TYPE tokenType;
-static char tokenValueBuffer[30];
-static int i_tokenValueBuffer;
-
-static char unReadTokenBuffer[30];
-static SNL_TYPE unReadTokenType;
+FILE * fp;
 
 void TypeDef(TreeNode * t);
 
-void UnReadToken(){
-
-}
 
 int is_reversed_word(const char * chs){
   return (tokenType == SNL_REVERSE_WORD && strcmp(chs, tokenValueBuffer) == 0) ? 1 : 0;
@@ -26,44 +16,6 @@ int is_not_reversed_word(const char * chs){
   return is_reversed_word(chs) ? 0 : 1;
 }
 
-SNL_TYPE ReadToken(){
-  int lineno, i;
-  char type[30], chs[30];
-  fscanf(fp, "%d: %s", &lineno, type);
-
-  if( strcmp(type, "reserved") == 0 ){
-    fscanf(fp, " word: %s", chs);
-    // printf("%d %s\n", lineno, chs);
-
-    tokenType = SNL_REVERSE_WORD;
-    strcpy(tokenValueBuffer, chs);
-
-  } else if ( strcmp(type, "ID,") == 0 ){
-    fscanf(fp, " name = %s", chs);
-    // printf("%d %s\n", lineno, chs);
-
-    tokenType = SNL_ID;
-    strcpy(tokenValueBuffer, chs);
-
-  } else if ( strcmp(type, "INTEGER,") == 0 ){
-    fscanf(fp, " var = %d", &i);
-    // printf("%d %d\n", lineno, i);
-
-    tokenType = SNL_INTERGER;
-    i_tokenValueBuffer = i;
-
-  } else if (type[0] == '\0'){
-    ;
-  } else {
-    // printf("%d %s\n", lineno, type);
-    tokenType = SNL_SYMBOL;
-    strcpy(tokenValueBuffer, type);
-
-  }
-
-  type[0] = '\0';
-  return tokenType;
-}
 
 TreeNode * ProgramHead(){
 
