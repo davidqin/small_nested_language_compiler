@@ -77,7 +77,7 @@ TreeNode * parse(){
 }
 
 int main(){
-  fp = fopen("../results/lexical_analysis.txt", "r");
+  fp = fopen("results/lexical_analysis.txt", "r");
   // freopen("../results/lexical_syntax.txt", "w", stdout);
   parse();
   // printf_syntax_tree(parse());
