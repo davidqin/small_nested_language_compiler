@@ -168,6 +168,7 @@ TreeNode * TypeDec(){
   TreeNode * t = NULL;
 
   ReadToken();
+
   if( is_reversed_word("type") ){
     t = typeDeclaration();
   } else

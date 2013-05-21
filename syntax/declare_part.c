@@ -1,5 +1,5 @@
 #include "../include/syntax.h"
-
+static int a = 1;
 TreeNode * DeclarePart(){
 
   TreeNode * typeP = (TreeNode *)malloc(sizeof(TreeNode));
@@ -11,8 +11,10 @@ TreeNode * DeclarePart(){
   if( typeP->child[0] ){
     typeP->nodeKind = TypeK;
     strcpy(typeP->nodeKindStr, "TypeK");
-  } else
+  } else {
     free(typeP);
+    typeP = NULL;
+  }
 
   TreeNode * varP = (TreeNode *)malloc(sizeof(TreeNode));
 
@@ -23,19 +25,22 @@ TreeNode * DeclarePart(){
   if( varP->child[0] ){
     varP->nodeKind = VarK;
     strcpy(varP->nodeKindStr, "VarK");
-  } else
+  } else {
     free(varP);
+    varP = NULL;
+  }
 
-  TreeNode * s = ProcDec();
   TreeNode * pp = NULL;
 
-  if(pp == NULL && typeP)
+  if( pp == NULL && typeP )
     pp = typeP;
 
   if( pp == NULL && varP )
     pp = varP;
   else if ( pp && varP )
     pp->Sibling = varP;
+
+  TreeNode * s = ProcDec();
 
   if( pp == NULL && s)
     pp = s;

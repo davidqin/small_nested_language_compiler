@@ -1,52 +1,107 @@
 1: reserved word: program
-1: ID, name = example
+1: ID, name = p
 2: reserved word: type
-2: ID, name = w1
+2: ID, name = t1
 2: =
 2: reserved word: integer
 2: ;
 3: reserved word: var
+3: reserved word: integer
+3: ID, name = v1
+3: ,
+3: ID, name = v2
+3: ;
+4: reserved word: procedure
+4: ID, name = q
+4: (
 4: reserved word: integer
-4: ID, name = a
+4: ID, name = i
+4: )
 4: ;
+5: reserved word: type
+5: ID, name = t1
+5: =
 5: reserved word: integer
-5: ID, name = b
 5: ;
-6: ID, name = w1
-6: ID, name = c
+6: reserved word: var
+6: reserved word: integer
+6: ID, name = v1
+6: ,
+6: ID, name = v2
 6: ;
-8: reserved word: procedure
-8: ID, name = sd
+7: reserved word: begin
+8: ID, name = a
 8: (
-8: reserved word: integer
-8: ID, name = s1
-8: ;
-8: reserved word: var
-8: reserved word: integer
-8: ID, name = s2
+8: ID, name = ccc
+8: ,
+8: ID, name = bbb
+8: ,
+8: ID, name = wefwef
+8: ,
+8: ID, name = dddd
 8: )
 8: ;
-9: reserved word: begin
-10: reserved word: if
-10: ID, name = s1
-10: <
-10: INTEGER, var = 10
-11: reserved word: then
-11: ID, name = s2
-11: :=
-11: ID, name = s1
-11: +
-11: INTEGER, var = 10
-12: reserved word: else
-12: ID, name = s2
-12: :=
-12: ID, name = s1
-12: -
-12: INTEGER, var = 10
-13: reserved word: fi
+9: reserved word: if
+9: ID, name = v1
+9: <
+9: INTEGER, var = 10
+9: reserved word: then
+9: ID, name = v1
+9: :=
+9: ID, name = v1
+9: +
+9: INTEGER, var = 10
+9: reserved word: else
+9: ID, name = v1
+9: :=
+9: ID, name = v1
+9: -
+9: INTEGER, var = 10
+9: reserved word: fi
+9: ;
+10: reserved word: end
+12: reserved word: begin
+13: ID, name = a
+13: (
+13: ID, name = ccc
+13: ,
+13: ID, name = bbb
+13: ,
+13: ID, name = wefwef
+13: ,
+13: ID, name = dddd
+13: )
 13: ;
-15: reserved word: end
-16: reserved word: begin
-18: reserved word: end
-18: .
+14: reserved word: if
+14: ID, name = v1
+14: <
+14: INTEGER, var = 10
+14: reserved word: then
+14: ID, name = v1
+14: :=
+14: ID, name = v1
+14: +
+14: INTEGER, var = 10
+14: reserved word: else
+14: ID, name = v1
+14: :=
+14: ID, name = v1
+14: -
+14: INTEGER, var = 10
+14: reserved word: fi
+14: ;
+15: ID, name = v2
+15: :=
+15: ID, name = v3
+15: +
+15: INTEGER, var = 100
+15: *
+15: INTEGER, var = 10
+15: -
+15: INTEGER, var = 1000
+15: *
+15: ID, name = s2
+15: ;
+16: reserved word: end
+17: .
 18: EOF

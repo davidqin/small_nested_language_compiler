@@ -40,8 +40,7 @@ void VarIdList(TreeNode * t){
 }
 
 TreeNode * VarDecList(){
-  TreeNode * t;
-  t = (TreeNode *)malloc(sizeof(TreeNode));
+  TreeNode * t = (TreeNode *)malloc(sizeof(TreeNode));
 
   if(t == NULL)
     return t;
@@ -70,9 +69,11 @@ TreeNode * VarDec(){
   ReadToken();
 
   if( is_reversed_word("var") ){
-    return VarDeclaration();}
-  else
+    return VarDeclaration();
+  }
+  else {
     UnReadToken();
+  }
 
   return NULL;
 }

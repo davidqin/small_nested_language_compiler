@@ -20,15 +20,15 @@ void printf_syntax_tree(TreeNode * root, int dep){
   int i;
   for(i = 0; i < dep * 4; ++i)putchar(' ');
 
-  // if(root->nodeKindStr[0] != '\0'){
-    printf("%s", root->nodeKindStr);
-    printf(" %s", root->kind.name);
+  printf("%s", root->nodeKindStr);
+  printf(" %s", root->kind.name);
 
-    for(i = 0; i < root->idnum && root->idnum < 3; ++i)
-      printf(" %s", root->name[i]);
+  // printf("((%d))", root->idnum);
+  for(i = 0; i < root->idnum; ++i)
+    printf(" %s", root->name[i]);
 
-    printf("\n");
-  // }
+  printf("\n");
+
 
   for(i = 0; i < 3; ++i){
     if( root->child[i] ){

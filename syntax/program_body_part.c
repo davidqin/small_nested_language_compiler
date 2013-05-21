@@ -2,11 +2,6 @@
 
 static char temp_name[30];
 
-TreeNode * SemList(){
-
-  return NULL;
-}
-
 TreeNode * StmMore(){
   TreeNode * t;
   ReadToken();
@@ -17,7 +12,7 @@ TreeNode * StmMore(){
   }
 
   if( is_symbol(";") )
-    return SemList();
+    return StmList();
 
   return t;
 }
@@ -182,17 +177,6 @@ TreeNode * Exp(){
   return t;
 }
 
-TreeNode * AssignmentRest(){
-  TreeNode * t = (TreeNode *)malloc(sizeof(TreeNode));
-
-  if( t ){
-    t->child[0] = Exp();
-    strcpy(t->name[0], temp_name);
-  }
-
-  return t;
-}
-
 TreeNode * ActParamMore(){
   ReadToken();
 
@@ -210,10 +194,8 @@ TreeNode * ActParamList(){
     return NULL;
 
   TreeNode * t;
-  ReadToken();
 
-  if( token_is_id || token_is_integer )
-    t = Exp();
+  t = Exp();
 
   if( t )
     t->Sibling = ActParamMore();
@@ -221,24 +203,38 @@ TreeNode * ActParamList(){
   return t;
 }
 
-TreeNode * CallStmRest(){
-  TreeNode * t = (TreeNode *)malloc(sizeof(TreeNode));
+TreeNode * AssCall(){
+  TreeNode * t = (TreeNode * )malloc(sizeof(TreeNode));
+  TreeNode * p = (TreeNode * )malloc(sizeof(TreeNode));
 
-  if( t ){
-    t->child[0] = ActParamList();
-    strcpy(t->name[0], temp_name);
+  if( p ){
+    p->nodeKind = ExpK;
+    strcpy(p->nodeKindStr, "ExpK");
+    strcpy(p->name[p->idnum++], tokenValueBuffer);
   }
 
-  return t;
-}
-
-TreeNode * AssCall(){
   ReadToken();
-  if( is_symbol(":=") )
-    return AssignmentRest();
+  if( is_symbol(":=") && t ){
+    t->child[0] = p;
+    t->child[1] = Exp();
 
-  if( is_symbol("(") )
-    return CallStmRest();
+    t->nodeKind = ExpK;
+    strcpy(t->nodeKindStr,"ExpK Op :=");
+
+    return t;
+  }
+
+  if( is_symbol("(") && t ){
+    t->child[0] = p;
+    t->child[1] = ActParamList();
+
+    t->nodeKind = ExpK;
+    strcpy(t->nodeKindStr,"ExpK Call");
+
+    if( is_not_symbol(")") )
+      fprintf(stderr, "Call method miss ')'\n");
+    return t;
+  }
 
   fprintf(stderr, "AssCall error\n");
   return NULL;
@@ -359,6 +355,7 @@ TreeNode * ProgramBody(){
 
   TreeNode * t;
   ReadToken();
+
   if( is_not_reversed_word("begin") ){
     fprintf(stderr, "Program body miss reversed word 'begin' \n");
     UnReadToken();

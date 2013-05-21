@@ -1,4 +1,5 @@
 #include "../include/syntax.h"
+
 TreeNode * ProcBody(){
   TreeNode * t = ProgramBody();
   if( t == NULL )
@@ -138,9 +139,8 @@ TreeNode * ProcDecLaration(){
   if( is_not_symbol(";") )
     fprintf(stderr, "Procedure declare miss ';'\n");
 
-
-  // t->child[1] = ProcDecPart();
-  t->child[1] = ProcBody();
+  t->child[1] = ProcDecPart();
+  t->child[2] = ProcBody();
 
   return t;
 }
@@ -152,6 +152,6 @@ TreeNode * ProcDec(){
     UnReadToken();
     return NULL;
   }
+
   return ProcDecLaration();
-  // return NULL;
 }
