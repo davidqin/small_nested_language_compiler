@@ -16,21 +16,28 @@ int is_not_symbol(const char * chs){
   return is_symbol(chs) ? 0 : 1;
 }
 
-static int dep = 0;
-
-void printf_syntax_tree(TreeNode * root){
+void printf_syntax_tree(TreeNode * root, int dep){
   int i;
   for(i = 0; i < dep * 4; ++i)putchar(' ');
 
-  // printf("%s", root->nodeKindStr);
-  // if(root->type_name)printf(" %s", root->type_name);
-  // printf("\n");
+  // if(root->nodeKindStr[0] != '\0'){
+    printf("%s", root->nodeKindStr);
+    printf(" %s", root->kind.name);
+
+    for(i = 0; i < root->idnum && root->idnum < 3; ++i)
+      printf(" %s", root->name[i]);
+
+    printf("\n");
+  // }
 
   for(i = 0; i < 3; ++i){
-    if(root->child[i]){
-      dep++;
-      printf_syntax_tree(root->child[i]);
-      dep--;
+    if( root->child[i] ){
+      printf_syntax_tree(root->child[i], dep + 1);
     }
   }
+
+  if( root->Sibling ){
+    printf_syntax_tree(root->Sibling, dep);
+  }
+
 }

@@ -8,7 +8,8 @@ lexical_analyst: results/compile/lexical.o
 results/compile/lexical.o: lexical/main.c
 	gcc -c $< -o $@
 
-syntax_analyst: results/compile/declare_part.o \
+syntax_analyst: results/compile/procedure_declare_part.o \
+                results/compile/declare_part.o \
                 results/compile/main.o \
                 results/compile/program_body_part.o \
                 results/compile/token.o \
@@ -16,6 +17,9 @@ syntax_analyst: results/compile/declare_part.o \
                 results/compile/utils.o \
                 results/compile/var_declare_part.o
 	gcc -o $@ $^
+
+results/compile/procedure_declare_part.o: syntax/procedure_declare_part.c
+	gcc -c $< -o $@
 
 results/compile/declare_part.o: syntax/declare_part.c
 	gcc -c $< -o $@

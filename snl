@@ -1,8 +1,20 @@
 program  example
-type  w1=integer;
-      w3=array [3..6] of integer;  {haha}
+type w1=integer;
 var
-      integer a;
-      integer b;
-      w1 c;
-.
+     integer a;
+     integer b;
+     w1 c;
+
+procedure sd(integer s1;var integer s2);
+begin
+   if s1<10
+      then s2:=s1+10
+      else s2:=s1-10
+      fi;
+      sss(s2);
+end
+begin
+   {read(a);
+      sd(a,b);
+      write(b)}
+end.

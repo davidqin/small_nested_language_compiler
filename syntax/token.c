@@ -20,6 +20,7 @@ SNL_TYPE ReadToken(){
     strcpy(tokenValueBuffer, unReadTokenBuffer);
     tokenType = unReadTokenType;
     hasUnReadToken = 0;
+
     return tokenType;
   }
 

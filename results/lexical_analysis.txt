@@ -5,26 +5,48 @@
 2: =
 2: reserved word: integer
 2: ;
-3: ID, name = w3
-3: =
-3: reserved word: array
-3: [
-3: INTEGER, var = 3
-3: ..
-3: INTEGER, var = 6
-3: ]
-3: reserved word: of
-3: reserved word: integer
-3: ;
-4: reserved word: var
+3: reserved word: var
+4: reserved word: integer
+4: ID, name = a
+4: ;
 5: reserved word: integer
-5: ID, name = a
+5: ID, name = b
 5: ;
-6: reserved word: integer
-6: ID, name = b
+6: ID, name = w1
+6: ID, name = c
 6: ;
-7: ID, name = w1
-7: ID, name = c
-7: ;
-8: .
-8: EOF
+8: reserved word: procedure
+8: ID, name = sd
+8: (
+8: reserved word: integer
+8: ID, name = s1
+8: ;
+8: reserved word: var
+8: reserved word: integer
+8: ID, name = s2
+8: )
+8: ;
+9: reserved word: begin
+10: reserved word: if
+10: ID, name = s1
+10: <
+10: INTEGER, var = 10
+11: reserved word: then
+11: ID, name = s2
+11: :=
+11: ID, name = s1
+11: +
+11: INTEGER, var = 10
+12: reserved word: else
+12: ID, name = s2
+12: :=
+12: ID, name = s1
+12: -
+12: INTEGER, var = 10
+13: reserved word: fi
+13: ;
+15: reserved word: end
+16: reserved word: begin
+18: reserved word: end
+18: .
+18: EOF

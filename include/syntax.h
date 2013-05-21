@@ -4,7 +4,7 @@
 
 typedef enum { SNL_INTERGER, SNL_CHAR, SNL_ARRAY, SNL_RECORD, SNL_REVERSE_WORD, SNL_ID, SNL_SYMBOL } SNL_TYPE;
 
-typedef enum { ProK, PheadK, TypeK, VarK, ProcDecK, StmLK, Deck, StmtK, ExpK } NodeKind;
+typedef enum { ProK, PheadK, TypeK, VarK, ProcDecK, StmLK, DecK, StmtK, ExpK } NodeKind;
 typedef enum { ArrayK, CharK, IntegerK, RecordK, IdK } dec;
 typedef enum { IfK, WhileK, AssignK, ReadK, WriteK, CallK, ReturnK } stmt;
 typedef enum { OpK, ConstK, IdEK } exp;
@@ -23,7 +23,7 @@ typedef struct proc {
 } procAttr;
 
 typedef struct expAttr {
-  //op
+  char op;
   int val;
   varKind varkind;
   ExpType type;
@@ -41,6 +41,7 @@ typedef struct node {
     dec d;
     stmt s;
     exp e;
+    char name[30];
   } kind;
 
   int idnum;
@@ -65,6 +66,8 @@ extern int i_tokenValueBuffer;
 extern char unReadTokenBuffer[30];
 extern SNL_TYPE unReadTokenType;
 extern int hasUnReadToken;
+
+void printf_syntax_tree(TreeNode * root, int dep);
 
 TreeNode * DeclarePart();
 TreeNode * ProgramBody();
@@ -91,6 +94,16 @@ int is_not_reversed_word(const char * chs);
 int is_symbol(const char * chs);
 int is_not_symbol(const char * chs);
 
+TreeNode * ProcDec();
+void FormList(TreeNode * t);
+TreeNode * ParamDecList();
+
+TreeNode * StmList();
+TreeNode * ActParamList();
+TreeNode * Exp();
+
 #define token_is_id ( tokenType == SNL_ID )
 #define token_is_not_id ( !token_is_id )
 #define token_is_eof ( strcmp("EOF", tokenValueBuffer) == 0 )
+#define token_is_integer ( tokenType == SNL_INTERGER )
+#define pct ( printf("ct = %s\n", tokenValueBuffer) )

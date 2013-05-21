@@ -49,6 +49,9 @@ TreeNode * VarDecList(){
   TypeDef(t);
   VarIdList(t);
 
+  t->nodeKind = DecK;
+  strcpy(t->nodeKindStr, "DecK");
+
   t->Sibling = VarDecMore();
 
   return t;
@@ -66,8 +69,8 @@ TreeNode * VarDeclaration(){
 TreeNode * VarDec(){
   ReadToken();
 
-  if( is_reversed_word("var") )
-    return VarDeclaration();
+  if( is_reversed_word("var") ){
+    return VarDeclaration();}
   else
     UnReadToken();
 

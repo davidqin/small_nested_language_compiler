@@ -5,11 +5,13 @@ void BaseType(TreeNode * t){
 
   if( is_reversed_word("integer") ){
     t->kind.d = IntegerK;
+    strcpy(t->kind.name, "IntegerK");
     return;
   }
 
   if( is_reversed_word("char") ){
     t->kind.d = CharK;
+    strcpy(t->kind.name, "CharK");
     return;
   }
 }
@@ -56,6 +58,7 @@ void ArrayType(TreeNode * t){
 
   t->attr.a_attr.childType = t->kind.d;
   t->kind.d = ArrayK;
+  strcpy(t->kind.name, "ArrayK");
 
 }
 
@@ -71,6 +74,7 @@ void StrutureType(TreeNode * t){
 
   if( is_reversed_word("record") ){
     t->kind.d = RecordK;
+    strcpy(t->kind.name, "RecordK");
     RecType(t);
     return;
   }
@@ -138,6 +142,9 @@ TreeNode * TypeDecList(){
   if( is_not_symbol(";") )
     fprintf(stderr, "type declaration ';' miss! \n");
 
+  t->nodeKind = DecK;
+  strcpy(t->nodeKindStr, "DecK");
+
   TreeNode * p;
   p = TypeDecMore();
 
@@ -158,12 +165,13 @@ TreeNode * typeDeclaration(){
 }
 
 TreeNode * TypeDec(){
-  ReadToken();
+  TreeNode * t = NULL;
 
-  if( is_reversed_word("type") )
-    return typeDeclaration();
-  else
+  ReadToken();
+  if( is_reversed_word("type") ){
+    t = typeDeclaration();
+  } else
     UnReadToken();
 
-  return NULL;
+  return t;
 }
