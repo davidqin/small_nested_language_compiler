@@ -26,3 +26,11 @@ snl程序例子
 词法分析token序列(lexical_analysis.txt)
 
 语法分析树（syntax_analysis.txt）
+
+
+待解决的问题
+---
+
+declearpart中解析存在问题
+
+函数调用与赋值应属于表达式exp()
