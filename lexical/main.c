@@ -145,6 +145,18 @@ void analyzer(FILE * fp){
   printf("%d: EOF\n", lineno);
 }
 
+void lexical_main(FILE * fp){
+  freopen("results/lexical_analysis.txt", "w", stdout);
+
+  analyzer(fp);
+
+  fclose(fp);
+}
+
+/*
+
+Keep this for DEBUG lexical part;
+
 int main(int argc, char * argv[]){
   char * file_name = *++argv;
 
@@ -157,3 +169,4 @@ int main(int argc, char * argv[]){
   fclose(fp);
   return 0;
 }
+*/

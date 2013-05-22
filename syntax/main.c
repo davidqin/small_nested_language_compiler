@@ -76,7 +76,25 @@ TreeNode * parse(){
   return t;
 }
 
-int main(){
+int main(int argc, char * argv[]){
+  if( argc < 2 ){
+    fprintf(stderr, "No source_file given.\n");
+    return 1;
+  }
+
+  if( argc > 2){
+    fprintf(stderr, "Too much arguments.\nUse case: snl source_file.\n");
+    return 1;
+  }
+  FILE * source_file = fopen(argv[1], "r");
+
+  if( source_file )
+    lexical_main(source_file);
+  else{
+    fprintf(stderr, "Can not open the source_file.\n");
+    return 1;
+  }
+
   fp = fopen("results/lexical_analysis.txt", "r");
   // freopen("../results/lexical_syntax.txt", "w", stdout);
   TreeNode * root = parse();

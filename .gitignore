@@ -1,4 +1,5 @@
 results/compile/*.o
+snl
 syntax_analyst
 lexical_analyst
 .DS_Store

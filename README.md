@@ -3,6 +3,24 @@
 
 SNL的词法分析，语法分析（递归下降）C语言实现。
 
+使用方式
+---
+
+    make
+    
+    ./snl source_file
+
+###结果
+    
+词法分析token results/lexical_analyst.txt
+
+语法树会输出到stdout
+
+
+文件夹说明
+---
+
+
 ###examples
 
 snl程序例子

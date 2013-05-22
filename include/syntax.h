@@ -69,6 +69,7 @@ extern char unReadTokenBuffer[30];
 extern SNL_TYPE unReadTokenType;
 extern int hasUnReadToken;
 
+void lexical_main(FILE * fp);
 void printf_syntax_tree(TreeNode * root, int dep);
 
 TreeNode * DeclarePart();

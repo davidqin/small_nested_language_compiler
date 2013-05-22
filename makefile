@@ -1,22 +1,16 @@
-all:
-	make lexical_analyst
-	make syntax_analyst
-
-lexical_analyst: results/compile/lexical.o
-	gcc -o $@ $^
+snl: results/compile/lexical.o \
+     results/compile/procedure_declare_part.o \
+     results/compile/declare_part.o \
+     results/compile/main.o \
+     results/compile/program_body_part.o \
+     results/compile/token.o \
+     results/compile/type_declare_part.o \
+     results/compile/utils.o \
+     results/compile/var_declare_part.o
+	gcc -g -o $@ $^
 
 results/compile/lexical.o: lexical/main.c
-	gcc -c $< -o $@
-
-syntax_analyst: results/compile/procedure_declare_part.o \
-                results/compile/declare_part.o \
-                results/compile/main.o \
-                results/compile/program_body_part.o \
-                results/compile/token.o \
-                results/compile/type_declare_part.o \
-                results/compile/utils.o \
-                results/compile/var_declare_part.o
-	gcc -g -o $@ $^
+	gcc -g -c $< -o $@
 
 results/compile/procedure_declare_part.o: syntax/procedure_declare_part.c
 	gcc -g -c $< -o $@
