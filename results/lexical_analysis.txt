@@ -1,107 +1,75 @@
 1: reserved word: program
 1: ID, name = p
-2: reserved word: type
-2: ID, name = t1
-2: =
-2: reserved word: integer
-2: ;
-3: reserved word: var
+3: reserved word: procedure
+3: ID, name = q
+3: (
 3: reserved word: integer
-3: ID, name = v1
-3: ,
-3: ID, name = v2
+3: ID, name = i
+3: )
 3: ;
-4: reserved word: procedure
-4: ID, name = q
-4: (
+4: reserved word: var
 4: reserved word: integer
-4: ID, name = i
-4: )
+4: ID, name = v1
+4: ,
+4: ID, name = v2
 4: ;
-5: reserved word: type
-5: ID, name = t1
-5: =
-5: reserved word: integer
-5: ;
-6: reserved word: var
-6: reserved word: integer
+5: reserved word: begin
+6: ID, name = a
+6: (
 6: ID, name = v1
+6: +
+6: INTEGER, var = 10
 6: ,
-6: ID, name = v2
+6: ID, name = bbb
+6: ,
+6: ID, name = wefwef
+6: ,
+6: ID, name = dddd
+6: )
 6: ;
-7: reserved word: begin
-8: ID, name = a
-8: (
-8: ID, name = ccc
-8: ,
-8: ID, name = bbb
-8: ,
-8: ID, name = wefwef
-8: ,
-8: ID, name = dddd
-8: )
-8: ;
-9: reserved word: if
-9: ID, name = v1
-9: <
-9: INTEGER, var = 10
-9: reserved word: then
-9: ID, name = v1
-9: :=
-9: ID, name = v1
-9: +
-9: INTEGER, var = 10
-9: reserved word: else
-9: ID, name = v1
-9: :=
-9: ID, name = v1
-9: -
-9: INTEGER, var = 10
-9: reserved word: fi
-9: ;
-10: reserved word: end
-12: reserved word: begin
-13: ID, name = a
-13: (
-13: ID, name = ccc
-13: ,
-13: ID, name = bbb
-13: ,
-13: ID, name = wefwef
-13: ,
-13: ID, name = dddd
-13: )
-13: ;
-14: reserved word: if
-14: ID, name = v1
-14: <
-14: INTEGER, var = 10
-14: reserved word: then
-14: ID, name = v1
-14: :=
-14: ID, name = v1
-14: +
-14: INTEGER, var = 10
-14: reserved word: else
-14: ID, name = v1
-14: :=
-14: ID, name = v1
-14: -
-14: INTEGER, var = 10
-14: reserved word: fi
-14: ;
-15: ID, name = v2
-15: :=
-15: ID, name = v3
-15: +
-15: INTEGER, var = 100
-15: *
-15: INTEGER, var = 10
-15: -
-15: INTEGER, var = 1000
-15: *
-15: ID, name = s2
-15: ;
-16: reserved word: end
-17: .
-18: EOF
+7: reserved word: end
+9: reserved word: begin
+10: ID, name = a
+10: (
+10: ID, name = ccc
+10: ,
+10: ID, name = bbb
+10: ,
+10: ID, name = wefwef
+10: ,
+10: ID, name = dddd
+10: )
+10: ;
+11: reserved word: if
+11: ID, name = v1
+11: <
+11: INTEGER, var = 10
+11: reserved word: then
+11: ID, name = v1
+11: :=
+11: ID, name = v1
+11: +
+11: INTEGER, var = 10
+11: reserved word: else
+11: ID, name = v1
+11: :=
+11: ID, name = v1
+11: -
+11: INTEGER, var = 10
+11: reserved word: fi
+11: ;
+12: ID, name = v2
+12: :=
+12: ID, name = v3
+12: +
+12: INTEGER, var = 100
+12: *
+12: INTEGER, var = 10
+12: -
+12: INTEGER, var = 1000
+12: *
+12: ID, name = s2
+12: ;
+13: reserved word: end
+14: .
+15: EOF

@@ -1,33 +1,33 @@
 #include "../include/syntax.h"
 static int a = 1;
 TreeNode * DeclarePart(){
+  TreeNode * tmp = NULL;
+  TreeNode * typeP = NULL;
+  tmp = TypeDec();
 
-  TreeNode * typeP = (TreeNode *)malloc(sizeof(TreeNode));
+  if( tmp ){
+    typeP = (TreeNode *)malloc(sizeof(TreeNode));
+  }
 
   if( typeP ){
-    typeP->child[0] = TypeDec();
-  }
-
-  if( typeP->child[0] ){
+    typeP->child[0] = tmp;
     typeP->nodeKind = TypeK;
     strcpy(typeP->nodeKindStr, "TypeK");
-  } else {
-    free(typeP);
-    typeP = NULL;
   }
 
-  TreeNode * varP = (TreeNode *)malloc(sizeof(TreeNode));
+  tmp = NULL;
+
+  tmp = VarDec();
+  TreeNode * varP = NULL;
+
+  if( tmp ){
+    varP = (TreeNode *)malloc(sizeof(TreeNode));
+  }
 
   if( varP ){
-    varP->child[0] = VarDec();
-  }
-
-  if( varP->child[0] ){
+    varP->child[0] = tmp;
     varP->nodeKind = VarK;
     strcpy(varP->nodeKindStr, "VarK");
-  } else {
-    free(varP);
-    varP = NULL;
   }
 
   TreeNode * pp = NULL;

@@ -3,7 +3,7 @@
 static char temp_name[30];
 
 TreeNode * StmMore(){
-  TreeNode * t;
+  TreeNode * t = NULL;
   ReadToken();
 
   if( is_reversed_word("end") || is_reversed_word("endwh") ){
@@ -22,7 +22,7 @@ void FieldVarMore(TreeNode * t){
 }
 
 TreeNode * FieldVar(){
-  TreeNode * t;
+  TreeNode * t = NULL;
   ReadToken();
   if( t )
     FieldVarMore(t); //TODO
@@ -73,7 +73,7 @@ TreeNode * IntegerExpk(){
 
 TreeNode * Factor(){
 
-  TreeNode * t;
+  TreeNode * t = NULL;
   ReadToken();
 
   if( token_is_id ){
@@ -193,9 +193,7 @@ TreeNode * ActParamList(){
   if( is_symbol(")") )
     return NULL;
 
-  TreeNode * t;
-
-  t = Exp();
+  TreeNode * t = Exp();
 
   if( t )
     t->Sibling = ActParamMore();
@@ -340,7 +338,7 @@ TreeNode * Stm(){
 }
 
 TreeNode * StmList(){
-  TreeNode * t, * p;
+  TreeNode * t = NULL, * p = NULL;
 
   t = Stm();
   p = StmMore();
@@ -353,7 +351,7 @@ TreeNode * StmList(){
 
 TreeNode * ProgramBody(){
 
-  TreeNode * t;
+  TreeNode * t = NULL;
   ReadToken();
 
   if( is_not_reversed_word("begin") ){

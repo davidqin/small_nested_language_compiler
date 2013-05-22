@@ -30,8 +30,10 @@ typedef struct expAttr {
 } ExpAttr;
 
 typedef struct node {
+
   struct node * child[3];
   struct node * Sibling;
+
   int Lineno;
 
   NodeKind nodeKind;

@@ -24,7 +24,7 @@ TreeNode * ProgramHead(){
 }
 
 TreeNode * Program(){
-  TreeNode *t, *q, *s, *root;
+  TreeNode *t = NULL, *q = NULL, *s = NULL, *root = NULL;
   t = ProgramHead();
   q = DeclarePart();
   s = ProgramBody();
@@ -45,6 +45,8 @@ TreeNode * Program(){
 
   if(q != NULL)
     root->child[1] = q;
+  else
+    root->child[1] = NULL;
 
   if(s == NULL){
     fprintf(stderr, "No Program Body\n");
@@ -63,8 +65,7 @@ TreeNode * Program(){
 TreeNode * parse(){
   int i = 0;
 
-  TreeNode * t;
-  t = Program();
+  TreeNode * t = Program();
 
   ReadToken();
   if( !token_is_eof ){
@@ -80,11 +81,6 @@ int main(){
   // freopen("../results/lexical_syntax.txt", "w", stdout);
   TreeNode * root = parse();
 
-  // printf("    %s %s %s\n", root->child[1]->Sibling->child[0]->nodeKindStr, root->child[1]->Sibling->child[0]->kind.name, root->child[1]->Sibling->child[0]->name[0]);
-  // printf("    %s\n", root->child[1]->Sibling->child[1]->nodeKindStr);
-  // if(root->child[1]->Sibling->child[1] == NULL)
-    // printf("sdfsdfsdf");
-  // printf("    %s\n", root->child[1]->Sibling->child[1]->nodeKindStr);
   printf_syntax_tree(root, 0);
 
   fclose(fp);

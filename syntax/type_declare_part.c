@@ -145,7 +145,7 @@ TreeNode * TypeDecList(){
   t->nodeKind = DecK;
   strcpy(t->nodeKindStr, "DecK");
 
-  TreeNode * p;
+  TreeNode * p = NULL;
   p = TypeDecMore();
 
   if( p )
