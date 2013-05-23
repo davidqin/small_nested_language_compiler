@@ -6,14 +6,14 @@ var  i x;
      integer ss;
 procedure sd(integer a);
 begin 
-   write(a)
+   write(a);
 end    
 begin
-  ss:=0;
-  while ss<6 do
-    y[ss]:=ss;
-    x:=y[ss];
+  ss := 0;
+  while ss < 6 do
+    y[ss] := ss;
+    x := y[ss];
     sd(x);
-    ss:=ss+1;
+    ss := ss + 1;
   endwh
 end. 

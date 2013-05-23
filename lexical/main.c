@@ -33,7 +33,8 @@ static char reserved_words[][20] = {
   "array",
   "of",
   "procedure",
-  "do"
+  "do",
+  "endwh"
 };
 
 void letter_start_handler(FILE * fp){
@@ -46,7 +47,7 @@ void letter_start_handler(FILE * fp){
   ungetc(ch, fp);
   buffer[i] = '\0';
 
-  for(i = 0; i < 23; ++i){
+  for(i = 0; i < 24; ++i){
     if( strcmp(buffer, reserved_words[i]) == 0 ){
       fprintf(out, "%d: reserved word: %s\n", lineno, buffer);
       return;

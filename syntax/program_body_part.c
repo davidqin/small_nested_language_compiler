@@ -35,6 +35,13 @@ void variMore(TreeNode * t){
 
   if( is_symbol("[") ){
     t->child[0] = Exp();
+    ReadToken();
+
+    if( is_not_symbol("]") ){
+      fprintf(stderr, "VarMore ']' miss\n");
+      UnReadToken();
+    }
+
     return;
   }
 
@@ -209,6 +216,8 @@ TreeNode * AssCall(){
     p->nodeKind = ExpK;
     strcpy(p->nodeKindStr, "ExpK");
     strcpy(p->name[p->idnum++], tokenValueBuffer);
+
+    variMore(p);
   }
 
   ReadToken();

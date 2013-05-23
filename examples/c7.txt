@@ -7,7 +7,6 @@ var
      integer a;
      integer b;
      w1 c;
-     {w2 d;ÓïÒå´íÎó}
 procedure sd(integer s1;var integer s2); 
 var integer ss;
 procedure sss(integer a);
