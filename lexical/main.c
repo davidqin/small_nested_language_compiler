@@ -8,6 +8,8 @@
 
 static int lineno;
 
+static FILE * out;
+
 static char reserved_words[][20] = {
   "main",
   "int",
@@ -30,7 +32,8 @@ static char reserved_words[][20] = {
   "read",
   "array",
   "of",
-  "procedure"
+  "procedure",
+  "do"
 };
 
 void letter_start_handler(FILE * fp){
@@ -43,32 +46,32 @@ void letter_start_handler(FILE * fp){
   ungetc(ch, fp);
   buffer[i] = '\0';
 
-  for(i = 0; i < 22; ++i){
+  for(i = 0; i < 23; ++i){
     if( strcmp(buffer, reserved_words[i]) == 0 ){
-      printf("%d: reserved word: %s\n", lineno, buffer);
+      fprintf(out, "%d: reserved word: %s\n", lineno, buffer);
       return;
     }
   }
-  printf("%d: ID, name = %s\n", lineno, buffer);
+  fprintf(out, "%d: ID, name = %s\n", lineno, buffer);
 }
 
 void digit_start_handler(FILE * fp){
   int i;
   fscanf(fp, "%d", &i);
-  printf("%d: INTEGER, var = %d\n", lineno, i);
+  fprintf(out, "%d: INTEGER, var = %d\n", lineno, i);
 }
 
 void print_sym(char ch){
-  printf("%d: %c\n", lineno, ch);
+  fprintf(out, "%d: %c\n", lineno, ch);
 }
 
 void colon_start_handler(FILE * fp){
   char ch;
   ch = fgetc(fp);
   if( ch == '=' )
-    printf("%d: :=\n", lineno);
+    fprintf(out, "%d: :=\n", lineno);
   else {
-    printf("(100,\"error\")\n"); //100 error
+    fprintf(out, "(100,\"error\")\n"); //100 error
     ungetc(ch, fp);
   }
 }
@@ -77,9 +80,9 @@ void dot_start_handler(FILE * fp){
   char ch;
   ch = fgetc(fp);
   if( ch == '.' )
-    printf("%d: ..\n", lineno);
+    fprintf(out, "%d: ..\n", lineno);
   else {
-    printf("%d: .\n", lineno);
+    fprintf(out, "%d: .\n", lineno);
     ungetc(ch, fp);
   }
 }
@@ -93,7 +96,7 @@ void string_handler(FILE * fp){
   }
 
   buffer[i] = '\0';
-  printf("(17,\"%s\")\n", buffer); // 17 string
+  fprintf(out, "(17,\"%s\")\n", buffer); // 17 string
 }
 
 void comment_handler(FILE * fp){
@@ -106,7 +109,7 @@ void analyzer(FILE * fp){
   char ch;
   while( !feof(fp) ){
     ch = fgetc(fp);
-    // printf("%c", ch);
+    // fprintf(out, "%c", ch);
     if( isalpha(ch) ){
       ungetc(ch, fp);
       letter_start_handler(fp);
@@ -142,15 +145,13 @@ void analyzer(FILE * fp){
     else if ( ch == '[' ) print_sym('[');
     else if ( ch == ']' ) print_sym(']');
   }
-  printf("%d: EOF\n", lineno);
+  fprintf(out, "%d: EOF\n", lineno);
 }
 
 void lexical_main(FILE * fp){
-  freopen("results/lexical_analysis.txt", "w", stdout);
-
+  out = fopen("results/lexical_analysis.txt", "w");
   analyzer(fp);
-
-  fclose(fp);
+  fclose(out);
 }
 
 /*

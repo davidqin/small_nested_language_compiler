@@ -77,6 +77,7 @@ TreeNode * parse(){
 }
 
 int main(int argc, char * argv[]){
+
   if( argc < 2 ){
     fprintf(stderr, "No source_file given.\n");
     return 1;
@@ -88,12 +89,16 @@ int main(int argc, char * argv[]){
   }
   FILE * source_file = fopen(argv[1], "r");
 
-  if( source_file )
+
+  if( source_file ){
     lexical_main(source_file);
+  }
   else{
     fprintf(stderr, "Can not open the source_file.\n");
     return 1;
   }
+
+  fclose(source_file);
 
   fp = fopen("results/lexical_analysis.txt", "r");
   // freopen("../results/lexical_syntax.txt", "w", stdout);

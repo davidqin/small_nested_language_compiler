@@ -37,4 +37,4 @@ results/compile/var_declare_part.o: syntax/var_declare_part.c
 	gcc -g -c $< -o $@
 
 clean:
-	rm -rf results/compile/*.o syntax_analyst lexical_analyst
+	rm -rf results/compile/*.o snl
