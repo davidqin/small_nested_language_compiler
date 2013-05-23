@@ -242,6 +242,26 @@ TreeNode * ReturnStm(){
   return NULL;
 }
 
+TreeNode * InputStm(){
+  TreeNode * t = (TreeNode * )malloc(sizeof(TreeNode));
+
+  ReadToken();
+  if( is_not_symbol("(") )
+    fprintf(stderr, "InputStm miss '('\n");
+
+  if( t )
+    t->child[0] = Variable();
+
+  t->nodeKind = StmtK;
+  strcpy(t->nodeKindStr, "StmtK Input");
+
+  ReadToken();
+  if( is_not_symbol(")") )
+    fprintf(stderr, "InputStm miss ')'\n");
+
+  return t;
+}
+
 TreeNode * OutputStm(){
   TreeNode * t = (TreeNode * )malloc(sizeof(TreeNode));
 
@@ -326,6 +346,9 @@ TreeNode * Stm(){
 
   if( is_reversed_word("write") )
     return OutputStm();
+
+  if( is_reversed_word("read") )
+    return InputStm();
 
   if( token_is_id ) {
     strcpy(temp_name, tokenValueBuffer);

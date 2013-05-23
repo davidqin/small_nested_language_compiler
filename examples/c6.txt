@@ -1,23 +1,22 @@
-program  example
-type w1=integer;
-var  
-     integer b;
-     w1 a;
+program example
+type w1 = integer;
+var integer b;
+    w1 a;
+procedure sd(integer s1;var integer s2); 
 procedure sss(integer a);
 begin
-   write(a)
+   write(a);
 end
-procedure sd(integer s1;var integer s2); 
 begin
-   if s1<10
-   then s2:=s1+10
-   else s2:=s1-10	
-   fi;
-   sss(s2);
-   sss(a)
+    if s1<10
+    then s2:=s1+10
+    else s2:=s1-10	
+    fi;
+    sss(s2);
+    sss(a);
 end
 begin      
    read(a);
    sd(a,b);
-   sss(b)
+   sss(b);
 end.
