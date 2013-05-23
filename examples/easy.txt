@@ -4,13 +4,13 @@ char  c;
 
 procedure f();
 begin
-    v1 :=2
+    v1 := 2
 end
 
 procedure t1();
 var  integer v1;
 begin
-    v1 :=1
+    v1 := 1
 end
 
 begin
