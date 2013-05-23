@@ -1,5 +1,18 @@
 #include "../include/syntax.h"
 static int a = 1;
+
+TreeNode * DeclareMore(){
+  TreeNode * t = NULL;
+  ReadToken();
+  if( is_reversed_word("type") || is_reversed_word("var") || is_reversed_word("procedure") ){
+    UnReadToken();
+    return DeclarePart();
+  }
+
+  UnReadToken();
+  return t;
+}
+
 TreeNode * DeclarePart(){
   TreeNode * tmp = NULL;
   TreeNode * typeP = NULL;
@@ -48,6 +61,12 @@ TreeNode * DeclarePart(){
     pp->Sibling->Sibling = s;
   else if( pp && !pp->Sibling && s)
     pp->Sibling = s;
+
+  if( pp ){
+    tmp = pp;
+    while( tmp->Sibling ) tmp = tmp->Sibling;
+    tmp->Sibling = DeclareMore();
+  }
 
   return pp;
 }
