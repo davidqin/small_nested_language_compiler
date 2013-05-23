@@ -110,7 +110,8 @@ TreeNode * Term(){
 
   while(1){
     ReadToken();
-    if( is_not_symbol(">") && is_not_symbol("*") ){
+
+    if( is_not_symbol("/") && is_not_symbol("*") ){
       UnReadToken();
       return t;
     }
@@ -161,7 +162,7 @@ TreeNode * Exp(){
   TreeNode * t = SimpleExp();
 
   ReadToken();
-  if( is_not_symbol("<") && is_not_symbol(":=") ){
+  if( is_not_symbol("<") && is_not_symbol(":=") && is_not_symbol(">") ){
     UnReadToken();
     return t;
   }
